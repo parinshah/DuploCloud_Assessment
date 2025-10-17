@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WeatherForecastSrvc</name>
+    </assembly>
+    <members>
+        <member name="M:WeatherForecastSrvc.Controllers.LocationController.#ctor(WeatherForecastSrvc.Services.LocationService)">
+            <summary>
+            Constructor to initialize the LocationService.
+            </summary>
+            <param name="service"></param>
+        </member>
+        <member name="M:WeatherForecastSrvc.Controllers.LocationController.AddLocation(WeatherForecastSrvc.DataTransferObject.AddLocationRequest,System.Threading.CancellationToken)">
+            <summary>
+            Adds a new location (latitude/longitude). 
+            If it already exists, returns the existing one.
+            </summary>
+            <param name="request"></param>
+            <param name="cancelToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WeatherForecastSrvc.Controllers.LocationController.GetAllLocations(System.Threading.CancellationToken)">
+            <summary>
+            Retrives all locations.
+            </summary>
+            <param name="cancelToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WeatherForecastSrvc.Controllers.LocationController.DeleteLocation(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Deletes a location by ID.
+            </summary>
+            <param name="id"></param>
+            <param name="cancelToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WeatherForecastSrvc.Controllers.WeatherForecastController.#ctor(WeatherForecastSrvc.Services.WeatherForecastService,WeatherForecastSrvc.Services.LocationService)">
+            <summary>
+            WeatherService — used to fetch data from Open-Meteo.
+            LocationService — used to get stored coordinates from DB for /api/weather/{id}
+            </summary>
+            <param name="weatherForecastService"></param>
+            <param name="locationService"></param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:WeatherForecastSrvc.Controllers.WeatherForecastController.GetWeatherForecastByCoordinates(System.Double,System.Double,System.Threading.CancellationToken)" -->
+        <member name="M:WeatherForecastSrvc.Controllers.WeatherForecastController.GetWeatherForecastByLocationId(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get the current weather forecast for a saved location by ID.
+            Example: GET /api/weatherforecast/3
+            </summary>
+        </member>
+        <member name="T:WeatherForecastSrvc.Data.AppDbContext">
+            <summary>
+            EF’s bridge between WeatherForcecastSrvc and the database. 
+            It tracks changes and executes SQL under the hood.
+            </summary>
+        </member>
+        <member name="P:WeatherForecastSrvc.Data.AppDbContext.Locations">
+            <summary>
+            Setup model to database table name.
+            </summary>
+        </member>
+        <member name="M:WeatherForecastSrvc.Data.AppDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Specifying the model to have unique latitude and longitude values.
+            </summary>
+            <param name="modelBuilder"></param>
+        </member>
+        <member name="T:WeatherForecastSrvc.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:WeatherForecastSrvc.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WeatherForecastSrvc.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:WeatherForecastSrvc.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="P:WeatherForecastSrvc.Model.Location.Id">
+            <summary>
+            Id for the Location, so it auto-generated when we add the location in DB.
+            </summary>
+        </member>
+        <member name="P:WeatherForecastSrvc.Model.Location.Latitude">
+            <summary>
+            Latitude value for the location. Constraints on the range value and also it is required field.
+            </summary>
+        </member>
+        <member name="P:WeatherForecastSrvc.Model.Location.Longitude">
+            <summary>
+            Longitude value for the location. Constraints on the range value and also it is required field.
+            </summary>
+        </member>
+        <member name="P:WeatherForecastSrvc.Model.Location.CreationTime">
+            <summary>
+            When new location is added, this field is going to be updated with current UTC datetime.
+            This will be useful when the same request comes for adding the location we can send the response with creationtime.
+            </summary>
+        </member>
+        <member name="M:WeatherForecastSrvc.Services.LocationService.#ctor(WeatherForecastSrvc.Data.AppDbContext)">
+            <summary>
+            DbContext is injected by ASP.NET Core via dependency injection
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:WeatherForecastSrvc.Services.LocationService.AddLocationAsync(System.Double,System.Double,System.Threading.CancellationToken)">
+            <summary>
+            Adds a new location if it doesn’t already exist.
+            If the same latitude and longitude are already in the database, it simply returns the existing record.
+            </summary>
+            <param name="latitude"></param>
+            <param name="longitude"></param>
+            <param name="cancelToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WeatherForecastSrvc.Services.LocationService.GetLocationByIdAsync(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Get location details from DB using id.
+            </summary>
+            <param name="id"></param>
+            <param name="cancelToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WeatherForecastSrvc.Services.LocationService.GetAllLocationsAsync(System.Threading.CancellationToken)">
+            <summary>
+            Retrieves all locations from the database, ordered by their ID.
+            Uses AsNoTracking for better performance since we’re only reading data from DB.
+            </summary>
+            <param name="cancelToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WeatherForecastSrvc.Services.LocationService.DeleteLocationAsync(System.Int32,System.Threading.CancellationToken)">
+            <summary>
+            Deletes a location by ID. Returns true if deleted successfully, false if not found.
+            </summary>
+            <param name="id"></param>
+            <param name="cancelToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WeatherForecastSrvc.Services.WeatherForecastService.#ctor(System.Net.Http.HttpClient,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Contructor initialize the httpClient object and gets the baseURL from config or else sets default.
+            </summary>
+            <param name="httpClient"></param>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:WeatherForecastSrvc.Services.WeatherForecastService.GetCurrentWeatherAsync(System.Double,System.Double,System.Threading.CancellationToken)">
+            <summary>
+            Fetches the current weather for given latitude and longitude from Open-Meteo API.
+            </summary>
+            <param name="latitude"></param>
+            <param name="longitude"></param>
+            <param name="cancelToken"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -4,6 +4,8 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>C:\Projects\DuploCloud\WeatherForecast\WeatherForecastSrvc\Documents\WeatherForecastAPIDocumentation.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
