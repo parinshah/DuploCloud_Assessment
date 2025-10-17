@@ -1,0 +1,39 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build results
+bin/
+obj/
+[Bb]uild/
+[Dd]ebug/
+[Rr]elease/
+
+# Test results
+TestResults/
+*.trx
+
+# User-specific files
+*.userprefs
+
+# Packages
+*.nupkg
+*.snupkg
+packages/
+*.dll
+*.exe
+*.log
+
+# Rider / VS Code / JetBrains
+.idea/
+.vscode/
+
+# Temporary files
+*.tmp
+*.cache
+*.config
+*.dbmdl
+
+# Publish output
+publish/
