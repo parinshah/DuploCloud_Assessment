@@ -52,7 +52,9 @@ namespace WeatherForecastSrvc.Controllers
                 Longitude = forecast.Longitude,
                 Temperature = forecast.CurrentWeather.Temperature,
                 Windspeed = forecast.CurrentWeather.Windspeed,
-                Time = forecast.CurrentWeather.Time.ToString("u")
+                Time = forecast.CurrentWeather.Time.ToString("u"),
+                WindDirection = forecast.CurrentWeather.Winddirection,
+                isDay = forecast.CurrentWeather.IsDay
             };
 
             //Return OK response
@@ -85,7 +87,9 @@ namespace WeatherForecastSrvc.Controllers
                 Longitude = forecast.Longitude,
                 Temperature = forecast.CurrentWeather.Temperature,
                 Windspeed = forecast.CurrentWeather.Windspeed,
-                Time = forecast.CurrentWeather.Time.ToString("u")
+                Time = forecast.CurrentWeather.Time.ToString("u"),
+                WindDirection = forecast.CurrentWeather.Winddirection,
+                isDay= forecast.CurrentWeather.IsDay
             };
 
             return Ok(result);

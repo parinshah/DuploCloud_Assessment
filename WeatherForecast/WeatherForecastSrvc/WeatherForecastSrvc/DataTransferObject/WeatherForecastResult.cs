@@ -7,5 +7,7 @@
         public double Temperature { get; set; }
         public double Windspeed { get; set; }
         public string Time { get; set; } = string.Empty;
+        public double WindDirection { get; set; }
+        public int isDay { get; set; }
     }
 }
